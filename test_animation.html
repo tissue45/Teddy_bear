@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Animation</title>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+    <style>
+        body { margin: 0; }
+        model-viewer {
+            width: 100vw;
+            height: 100vh;
+        }
+        .controls {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <model-viewer id="viewer" src="test_animation.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls camera-orbit="0deg 75deg 150%" max-camera-orbit="auto auto 500%" poster="poster.webp" shadow-intensity="1" autoplay>
+        <div class="controls">
+            <button id="idle_button">Idle</button>
+            <button id="walking_button">Walking</button>
+            <button id="silly_dancing_button">Silly Dancing</button>
+        </div>
+    </model-viewer>
+
+    <script>
+        const modelViewer = document.querySelector('#viewer');
+
+        // It's good practice to wait for the model to be loaded before trying to interact with it.
+        modelViewer.addEventListener('load', () => {
+            const availableAnimations = modelViewer.availableAnimations;
+            console.log('Available animations:', availableAnimations);
+
+            const idleButton = document.querySelector('#idle_button');
+            idleButton.addEventListener('click', () => {
+                modelViewer.animationName = 'Walking';
+                modelViewer.play();
+            });
+
+            const walkingButton = document.querySelector('#walking_button');
+            walkingButton.addEventListener('click', () => {
+                modelViewer.animationName = 'Silly Dancing';
+                modelViewer.play();
+            });
+
+            const sillyDancingButton = document.querySelector('#silly_dancing_button');
+            sillyDancingButton.addEventListener('click', () => {
+                modelViewer.animationName = 'Idle';
+                modelViewer.play();
+            });
+        });
+    </script>
+</body>
+</html>
